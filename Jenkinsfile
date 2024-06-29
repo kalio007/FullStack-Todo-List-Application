@@ -15,7 +15,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t ${DOCKER_IMAGE} .'
+                    sh "docker build -t ${DOCKER_IMAGE} ."
+                    // sh "sudo docker build -t todolist ."
                 }
             }
         }
@@ -41,5 +42,20 @@ pipeline {
             }
         }
     }
-
+        post {
+                always {
+                    script {
+                        sh 'docker-compose down || true'
+                    }
+                }
+                success {
+                    echo 'Pipeline succeeded!'
+                }
+                failure {
+                    echo 'Pipeline failed!'
+                }
+            }
 }
+
+
+
