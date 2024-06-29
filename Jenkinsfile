@@ -1,9 +1,15 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_IMAGE = 'todo-app:latest'
+    environment{
+        DEPLOYMENT = 'local'
+        ENVIRONMENT = 'development'
+        DB = 'mongodb://mongodb:27017/todo_list'
+        DB_NAME = 'todo_list'
+        DB_DEVELOPMENT = 'mongodb://mongodb:27017/todo_list'
+        DB_NAME_DEVELOPMENT = 'todo_list'
     }
+
 
     stages {
         stage('Checkout') {
@@ -15,7 +21,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${DOCKER_IMAGE} ."
+                    sh "docker build -t todo_list ."
                     // sh "sudo docker build -t todolist ."
                 }
             }
